@@ -34,12 +34,11 @@ function finishPopulatingAlerts(){
   var alertsArray = JSON.parse($('#alerts').text())
   var alertsListHTML="<input type='text' name='id' value='"+USER_ID+"' class='hide'><table><tr><th>Classes</th><th>Settings</th><th>Actions</th></tr>"
   for(var i = 0; i<alertsArray.length ; i++){
-console.log(alertsArray[i])
     if(alertsArray[i]["settings"]["autodelete"]){
-    alertsListHTML+="<tr><td><div class='tableDiv'>"+alertsArray[i]["classes"]+"</div></td><td><div class='tableDiv'>Autodelete: enabled</div></td><td><div class='tableDiv'><button type='submit' name='edit' value="+i+">Edit</button><button type='submit' name='delete' value="+i+">Delete</button></div></td></tr>"
+    alertsListHTML+="<tr><td><div class='tableDiv'>"+alertsArray[i]["classes"]+"</div></td><td><div class='tableDiv'>Autodelete: enabled</div></td><td><div class='tableDiv'><button type='submit' name='edit' value="+i+">Edit</button><button type='submit' name='delete' value="+i+">Delete</button><button type='submit' name='test' value="+i+">Test</button></div></td></tr>"
 }
 else{
-  alertsListHTML+="<tr><td><div class='tableDiv'>"+alertsArray[i]["classes"]+"</div></td><td><div class='tableDiv'>Autodelete: disabled</div></td><td><div class='tableDiv'><button type='submit' name='edit' value="+i+">Edit</button><button type='submit' name='delete' value="+i+">Delete</button></div></td></tr>"
+  alertsListHTML+="<tr><td><div class='tableDiv'>"+alertsArray[i]["classes"]+"</div></td><td><div class='tableDiv'>Autodelete: disabled</div></td><td><div class='tableDiv'><button type='submit' name='edit' value="+i+">Edit</button><button type='submit' name='delete' value="+i+">Delete</button><button type='submit' name='test' value="+i+">Test</button></div></td></tr>"
 
 }
   }
@@ -111,8 +110,12 @@ for(var i =0; i<courseData.length;i++){
   }
   }
 }
-if(editing&&JSON.parse($('#edit-settings').text())["autodelete"]){
-  htmlStuff+="<input class='hide' type='text' name='formID' value='"+USER_ID+"'>___________<br><br>Autodelete course from notification group upon alert: <input type='checkbox' id='autodelete' name='autodelete' checked><br><br><input type='submit' value='Create Alert'></form>"
+if(editing){
+  if(JSON.parse($('#edit-settings').text())["autodelete"]){
+  htmlStuff+="<input class='hide' type='text' name='formID' value='"+USER_ID+"'>___________<br><br>Autodelete course from notification group upon alert: <input type='checkbox' id='autodelete' name='autodelete' checked><br><br><input type='submit' value='Update Alert'></form>"}
+  else{
+htmlStuff+="<input class='hide' type='text' name='formID' value='"+USER_ID+"'>___________<br><br>Autodelete course from notification group upon alert: <input type='checkbox' id='autodelete' name='autodelete'><br><br><input type='submit' value='Update Alert'></form>"
+  }
 
 }
 else{

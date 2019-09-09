@@ -46,7 +46,8 @@ exports.setUser = function (userObject, callback) { //updates user data
 		for (var i = 0; i < a.length; i++) {
 			if (userObject['sub'] === a[i]['sub']) {
 				a[i]["lastmodified"] = Date();
-				a[i]["phone"]=userObject['phone']
+				if(userObject['phone']!=""){
+				a[i]["phone"]=userObject['phone']}
 				a[i]["alertemail"]=userObject['alertemail']
 				a[i]["calendar"]=userObject['calendar']
 				var classesalert=""
@@ -109,7 +110,7 @@ exports.editNotification = function (num,sub, classes, settings, callback){
 				var alerts=JSON.parse(a[i]['classesalert'])
 				alerts[num]["classes"]=classes
 				alerts[num]["settings"]=settings
-				a[i]['alerts']=JSON.stringify(alerts)
+				a[i]['classesalert']=JSON.stringify(alerts)
 				a[i].save(function(){
 					callback(alerts)
 				})

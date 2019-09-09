@@ -10,6 +10,8 @@ var User = require(__dirname + '/../models/User');
 
 var Admin = require(__dirname + '/../models/Admin')
 
+var FileServer = require(__dirname + '/../file_server');
+
 var CLIENT_ID="1018817613137-hn5ovvld3e1jlh0su3kvqhu6phqk8vd3.apps.googleusercontent.com"
 const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client(CLIENT_ID);
@@ -281,9 +283,9 @@ router.get('/updateAlert', function(req, res) {
     const userid = req.query.formID;
 userObject = {}
 userObject['sub']=userid
-var settings={}
+var settings="";
 
-if(req.query.autodelete==="on"){
+if(req.query.autodelete=="on"){
   settings={"autodelete":true};//IMPLEMENT SETTINGS
 }
 else{
@@ -331,6 +333,43 @@ router.post('/editalert', function(req, res) {
       res.setHeader('Content-Type', 'text/html')
       res.render('alerts');
     })
+  }
+  else if(req.body.test){
+    User.getUsers(function(a){
+      for (var i = 0; i < a.length; i++) {
+  			if (req.body.id === a[i]['sub']) {
+          var alerts=JSON.parse(a[i]["classesalert"])
+  				var alert=alerts[req.body.test]
+          var classInd = Math.floor(Math.random() * alert["classes"].length)
+  				var classi = alert["classes"][classInd]
+          FileServer.notify(a[i]["email"],a[i]["phone"], classi+" opened up!", classi+" opened up!  You can now register on Penn Intouch (http://bit.ly/2k3Hris).  This message was brought to you by PennCourseAlertPlus.")
+            var deleted=false;
+          if(alert["settings"]["autodelete"]){
+            if(alert["classes"].length==1){
+              deleted=true;
+              User.deleteAlert(req.body.id,req.body.test,function(){
+                res.status(200);
+                res.setHeader('Content-Type', 'text/html')
+                res.render('alerts');
+              })
+            }
+            else{
+            alert["classes"].splice(classInd,1)
+            alerts[req.body.test]=alert
+            }
+          }
+          if(!deleted){
+          a[i]["classesalert"]=JSON.stringify(alerts)
+          a[i].save(function(){
+            res.status(200);
+            res.setHeader('Content-Type', 'text/html')
+            res.render('alerts');
+          })
+        }
+  			}
+  		}
+    })
+
   }
 
 
