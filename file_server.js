@@ -9,7 +9,7 @@ var User = require(__dirname + '/models/User');
 var request = require('request');
 var Admin = require(__dirname + '/models/Admin')
 
-var http = require("http");
+var https = require("https");
 
 app.use(express.static('public'));
 app.set('views', __dirname + '/views');
@@ -107,7 +107,7 @@ const client = require('twilio')(textCreds["accountSid"], textCreds["authToken"]
 
 
 setInterval(function() {
-    http.get("https://www.penncoursealertplus.com");
+    https.get("https://www.penncoursealertplus.com");
 }, 300000); // keeps Heroku website awake
 
 	var old_result_data=[];
