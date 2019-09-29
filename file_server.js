@@ -9,6 +9,8 @@ var User = require(__dirname + '/models/User');
 var request = require('request');
 var Admin = require(__dirname + '/models/Admin')
 
+var http = require("http");
+
 app.use(express.static('public'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -103,6 +105,11 @@ const client = require('twilio')(textCreds["accountSid"], textCreds["authToken"]
 
 	setInterval(checkCourses , 5000);
 
+
+setInterval(function() {
+    http.get("https://www.penncoursealertplus.com");
+}, 300000); // keeps Heroku website awake
+
 	var old_result_data=[];
 
 	function checkCourses(){
@@ -115,7 +122,7 @@ const client = require('twilio')(textCreds["accountSid"], textCreds["authToken"]
 						headers: creds
 				};
 				request(requestOptions, function(err, response, body) {
-console.log("test")
+
 					var parsedBody=JSON.parse(body)
 					var result_data = parsedBody["result_data"]
 					for (var r =0; r<min(result_data.length,old_result_data.length);i++){
