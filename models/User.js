@@ -85,7 +85,7 @@ exports.setNotification = function (userObject, classes, settings, callback){
 				var allAlerts=[];
 				a[i]["lastmodified"] = Date();
 
-				if((typeof a[i]["classesalert"]==="undefined")|| (a[i]["classesalert"]==="")){
+				if(!a[i]["classesalert"]){
 					allAlerts=[{"classes":classes,"datecreated":a[i]["lastmodified"],"settings":{}}]
 					a[i]["classesalert"]=JSON.stringify([{"classes":classes,"datecreated":a[i]["lastmodified"],"settings":settings}])
 				}

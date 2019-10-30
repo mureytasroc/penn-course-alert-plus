@@ -237,6 +237,9 @@ router.get('/setAlert', function(req, res) {
   console.log(log);
 
   classes=req.query.classes
+  if(!(classes instanceof Array)){
+    classes = [classes]
+  }
 
 
     const userid = req.query.formID;
@@ -318,9 +321,7 @@ router.post('/editalert', function(req, res) {
   console.log(log);
 
   if(req.body.edit){
-    console.log("edit "+req.body.edit)
     User.getAlerts(req.body.id,function(alerts){
-      console.log("edit")
       res.status(200);
       res.setHeader('Content-Type', 'text/html')
       res.render('newalert',{num:req.body.edit,alert:alerts[req.body.edit]});

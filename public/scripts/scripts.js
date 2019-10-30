@@ -302,5 +302,6 @@ else{
   $('#headerLoggedIn').removeClass('hide')
   $('#headerLogout').text("Sign Out")
   $('#headerLogout').css('display','block')
+  $('#headerLogout').css('color','white')
   $('#headerLogout').click(signOut);
 }
