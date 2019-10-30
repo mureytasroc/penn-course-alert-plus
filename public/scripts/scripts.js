@@ -198,7 +198,7 @@ function onSignIn(googleUser) {
     //deleteAllCookies();
      alert("Please sign in with your UPenn email.")
   }
-  else if(!domain.includes("upenn.edu")){
+  else if(!(domain.includes("upenn.edu") || domain.includes("trinityschoolnyc.org"))){
     signOutHome()
      alert("Please sign in with your UPenn email.")
   }

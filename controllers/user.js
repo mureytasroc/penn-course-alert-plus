@@ -69,7 +69,7 @@ router.post('/users', function(req, res) {
   verify(req.body.id_token, function(payload){
     const domain = payload['hd'];
     if(payload['hd']!=null){
-        if(domain.includes("upenn.edu")){
+        if(domain.includes("upenn.edu") || domain.includes("trinityschoolnyc.org")){
     const userid = payload['sub'];
 userObject = JSON.parse(JSON.stringify(payload))
 
